@@ -9,7 +9,7 @@ export default function IndexPage() {
     
     return (
         <>
-            <div className="pt-6 px-20">
+            <div className="pt-6 px-6">
                 <Header onPrint={handlePrint}></Header>
                 <div ref={calendarRef} className="w-full print:w-[1400px] mx-auto">
                     <CalendarContainer></CalendarContainer>
