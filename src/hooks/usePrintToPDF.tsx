@@ -6,8 +6,7 @@ export const usePrintToPDF = (ref: React.RefObject<HTMLDivElement | null>) => {
     documentTitle: "Staff Roster Calendar",
     pageStyle: `
         @page {
-            size: 400mm 210mm;
-            margin: 0mm 0mm 0mm 0mm;
+          size: 0mm 0mm;
         }
     `,
   });

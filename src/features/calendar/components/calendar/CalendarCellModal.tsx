@@ -4,6 +4,7 @@ import CalendarCellForm from "./CalendarCellForm";
 import type { Roster, SelectedStaff, SelectedTag } from "../../types/roster";
 import { BsQuestionCircle } from "react-icons/bs";
 import Hover from "@/components/common/Hover";
+import { formConfig } from "../../utils/FormConfig";
 
 interface CalendarCellModalProps {
     selectedDate: Date | null;
@@ -98,42 +99,49 @@ export default function CalendarCellModal({selectedDate, isOpen, onClose, roster
                                 </div>
 
                                 <div className="overflow-y-auto max-h-[300px] w-full">
-                                    {rosterEntries.length === 0 ? (
+                                    {rosterEntries.length === 0 
+                                    ? (
                                         <p className="text-primary mt-2 font-semibold">No Roster Created</p>
-                                    ) : (
-                                    <ul className="text-md space-y-1">
-                                        {rosterEntries.map(({tagLabel, tag, staff}) => (
-                                            <li key={tagLabel}>
-                                                <div className="flex flex-col w-full mt-2 px-3 pb-4 pt-2 border border-gray-200 rounded-sm">
-                                                    <div className="flex justify-between items-center">
-                                                        <p className="font-semibold text-primary">
-                                                            {tag.label}
-                                                            <span className="text-xs font-normal text-gray-500 ml-2">
-                                                                {tag.name}
-                                                            </span>
-                                                        </p>
-                                                        <FiMinusCircle 
-                                                            className="h-6 w-6 text-red-800 cursor-pointer" 
-                                                            onClick={() => handleDelete(tagLabel)}
-                                                        />
-                                                    </div>
-                                                    <div className="mt-2">
-                                                        {staff.map((member) => (
-                                                            <div 
-                                                                key={member.id}
-                                                                className="flex items-center gap-2 mt-1"
-                                                            >
-                                                                {/* <div 
-                                                                    className="w-3 h-3 rounded-full" 
-                                                                    style={{ backgroundColor: member.color }} 
-                                                                /> */}
-                                                                <div className="text-sm font-semibold w-full h-10 p-2 text-white rounded-sm" style={{ backgroundColor: member.color }} >{member.name}</div>
+                                    ) 
+                                    : (
+                                        <ul className="text-md space-y-1">
+                                            {rosterEntries.map(({tagLabel, tag, staff}) => {
+                                                const tagConfig = formConfig.fields.find(field => field.label === tag.label);
+                                                
+                                                return (
+                                                    <li key={tagLabel}>
+                                                        <div className="flex flex-col w-full mt-2 px-3 pb-4 pt-2 border border-gray-200 rounded-sm">
+                                                            <div className="flex justify-between items-center">
+                                                                <p className={`font-semibold text-primary`} style={{ color: tagConfig?.color }}>
+                                                                    {tag.label}
+                                                                    <span className="text-xs font-normal text-gray-500 ml-2">
+                                                                        {tag.name}
+                                                                    </span>
+                                                                </p>
+                                                                <FiMinusCircle 
+                                                                    className="h-6 w-6 text-red-800 cursor-pointer" 
+                                                                    onClick={() => handleDelete(tagLabel)}
+                                                                />
                                                             </div>
-                                                        ))}
+                                                            <div className="mt-2">
+                                                                {staff.map((member) => (
+                                                                    <div 
+                                                                        key={member.id}
+                                                                        className="flex items-center gap-2 mt-1"
+                                                                    >
+                                                                        {/* <div 
+                                                                            className="w-3 h-3 rounded-full" 
+                                                                            style={{ backgroundColor: member.color }} 
+                                                                        /> */}
+                                                                        <div className="text-sm font-semibold w-full h-10 p-2 text-white rounded-sm" style={{ backgroundColor: member.color }} >{member.name}</div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </li>
-                                            ))}
+                                                    </li>
+                                                )
+                                            })
+                                            }
                                         </ul>
                                     )}
                                 </div>

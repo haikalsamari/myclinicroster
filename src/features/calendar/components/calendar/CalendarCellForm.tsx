@@ -119,7 +119,7 @@ export default function CalendarCellForm({selectedDate, onSubmit}: CalendarCellF
                                                 className="cursor-pointer"
                                             >
                                                 <div className="flex items-center justify-between w-full gap-2 py-1">
-                                                    <p className="font-semibold text-primary font-inter">
+                                                    <p className="font-bold text-primary font-inter" style={{ color: field.color }}>
                                                         {field.label}
                                                     </p>
                                                     <span className="text-xs text-gray-500 font-inter">
