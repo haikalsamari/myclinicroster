@@ -134,7 +134,7 @@ export default function TagForm({onSubmit}: TagFormProps) {
                         </div>
                     </div>
                 </div>
-                <Button className="w-full h-10 rounded-sm" variant="default" onClick={handleSubmit}>Add Tag</Button>
+                <Button className="w-full h-10 rounded-lg" variant="default" onClick={handleSubmit}>Add Tag</Button>
             </div>
         </>
     )

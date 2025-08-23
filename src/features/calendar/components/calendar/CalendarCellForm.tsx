@@ -107,7 +107,7 @@ export default function CalendarCellForm({selectedDate, onSubmit}: CalendarCellF
                         </div>
                         <div>
                             <Select onValueChange={(handleSelectedTag)}>
-                                <SelectTrigger className="w-full py-5 rounded-sm">
+                                <SelectTrigger className="w-full py-5 rounded-lg">
                                     <SelectValue placeholder="Select Tag" />
                                 </SelectTrigger>
                                 <SelectContent className="bg-white">
@@ -143,14 +143,13 @@ export default function CalendarCellForm({selectedDate, onSubmit}: CalendarCellF
                         </div>
                         <div>
                             <Select onValueChange={(handleSelectedStaff)}>
-                                <SelectTrigger className="w-full py-5 rounded-sm">
+                                <SelectTrigger className="w-full py-5 rounded-lg">
                                     <SelectValue placeholder="Select Staff" />
                                 </SelectTrigger>
                                 <SelectContent className="bg-white">
                                     <SelectGroup>
                                         {staffList.map((staff) => {
                                             const isAssigned = isStaffAssigned(staff.id);
-
                                             return (
                                                 <SelectItem 
                                                     key={staff.id} 
@@ -177,7 +176,7 @@ export default function CalendarCellForm({selectedDate, onSubmit}: CalendarCellF
                         </div>
                     </div>
                 </div>
-                <Button className="w-full h-10 rounded-sm text-white" variant="default" onClick={handleSubmit}>Confirm</Button>
+                <Button className="w-full h-10 rounded-lg text-white" variant="default" onClick={handleSubmit}>Confirm</Button>
             </div>
         </>
     )
