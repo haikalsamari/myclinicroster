@@ -18,7 +18,7 @@ export default function Header({onPrint}: HeaderProps) {
                 </div>
                 <div className="flex flex-row gap-5 items-center">
                     <div className="flex justify-end">
-                        <Button className="border rounded-sm text-white hover:bg-gray-200" variant={"default"} onClick={() => setOpenStaffModal(true)}>Manage Staff</Button>
+                        <Button className="border rounded-lg text-white hover:bg-gray-200" variant={"default"} onClick={() => setOpenStaffModal(true)}>Manage Staff</Button>
                         <StaffModal 
                             isOpen={openStaffModal}
                             onClose={() => setOpenStaffModal(false)}
