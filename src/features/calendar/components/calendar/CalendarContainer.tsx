@@ -9,7 +9,7 @@ export default function CalendarContainer() {
     const today = new Date();
     const [roster, setRoster] = useLocalStorage<Roster>("rosters", {});
     const {currentMonth, currentYear, nextMonth, previousMonth} = useCalendarNavigation(today.getMonth(), today.getFullYear());
-    const {calendarCells, missingDays} = calculateEmptyCells(currentYear, currentMonth);
+    const {calendarCells} = calculateEmptyCells(currentYear, currentMonth);
     
     const dayList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
