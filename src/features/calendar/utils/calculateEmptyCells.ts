@@ -1,4 +1,4 @@
-import { getDaysInMonth } from "./Days";
+import { getDaysInMonth } from "./daysMonths";
 
 export function calculateEmptyCells(currentYear: number, currentMonth: number) {
     const days = getDaysInMonth(currentYear, currentMonth);

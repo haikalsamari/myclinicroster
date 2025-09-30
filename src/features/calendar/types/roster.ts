@@ -6,16 +6,15 @@ export interface ShiftAssignment {
     tag: Tag;
 }
 
-export interface DayRoster {
-    [tagLabel: string]: ShiftAssignment;
-}
-
-export interface MonthRoster {
-    [day: number]: DayRoster;
-}
-
 export interface Roster {
-    [monthYear: string]: MonthRoster;
+    [monthYear: string]: {
+        [day: number]: {
+            [tagLabel: string]: {
+                staff: Staff[];
+                tag: Tag;
+            }
+        }
+    };
 }
 
 export interface SelectedStaff {
@@ -28,3 +27,15 @@ export interface SelectedTag {
     name: string;
     label: string;
 }
+
+// export interface DayRoster {
+//     [tagLabel: string]: ShiftAssignment;
+// }
+
+// export interface MonthRoster {
+//     [day: number]: DayRoster;
+// }
+
+// export interface Roster {
+//     [monthYear: string]: MonthRoster;
+// }

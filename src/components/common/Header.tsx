@@ -12,13 +12,19 @@ export default function Header({onPrint}: HeaderProps) {
 
     return (
         <>
-            <div className="flex flex-row items-center justify-between font-inter">
+            <div className="flex flex-row items-center justify-between font-inter py-4">
                 <div>
                     <p className="font-bold text-xl">My<span className="text-primary">ClinicRoster</span></p>
                 </div>
                 <div className="flex flex-row gap-5 items-center">
                     <div className="flex justify-end">
-                        <Button className="border rounded-lg text-white hover:bg-gray-200" variant={"default"} onClick={() => setOpenStaffModal(true)}>Manage Staff</Button>
+                        <Button 
+                            className="border rounded-lg text-white hover:bg-gray-200" 
+                            variant={"default"} 
+                            onClick={() => setOpenStaffModal(true)}
+                            >
+                                Manage Staff
+                        </Button>
                         <StaffModal 
                             isOpen={openStaffModal}
                             onClose={() => setOpenStaffModal(false)}

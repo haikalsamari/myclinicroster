@@ -1,5 +1,5 @@
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
-import { monthNames } from "../../utils/Days";
+import { monthNames } from "../../utils/daysMonths";
 
 interface CalendarHeaderProps {
     currentMonth: number;

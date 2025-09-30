@@ -1,10 +1,11 @@
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { FiMinusCircle } from "react-icons/fi";
 import CalendarCellForm from "./CalendarCellForm";
+import { produce } from 'immer'; 
 import type { Roster, SelectedStaff, SelectedTag } from "../../types/roster";
-import { BsQuestionCircle } from "react-icons/bs";
-import Hover from "@/components/common/Hover";
-import { formConfig } from "../../utils/FormConfig";
+import { formConfig } from "../../utils/formConfig";
+// import { getDayMonthYear } from "../../utils/daysMonths";
+import { useRoster } from "../../hooks/useRoster";
 
 interface CalendarCellModalProps {
     selectedDate: Date | null;
@@ -14,12 +15,10 @@ interface CalendarCellModalProps {
     setRoster: (roster: Roster) => void;
 }
 
-export default function CalendarCellModal({selectedDate, isOpen, onClose, roster, setRoster}: CalendarCellModalProps) {    
-    const handleFormSubmit = (data: { 
-        selectedDate: Date, 
-        selectedStaffs: SelectedStaff[], 
-        selectedTag: SelectedTag 
-    }) => {
+export default function CalendarCellModal({selectedDate, isOpen, onClose, roster, setRoster}: CalendarCellModalProps) {  
+    const {getRosterEntries} = useRoster(selectedDate, roster); 
+
+    const handleFormSubmit = (data: { selectedDate: Date, selectedStaffs: SelectedStaff[], selectedTag: SelectedTag}) => {
         const monthYearKey = `${data.selectedDate.getMonth() + 1}-${data.selectedDate.getFullYear()}`;
         const day = data.selectedDate.getDate();
         const tagKey = data.selectedTag.label;
@@ -36,7 +35,7 @@ export default function CalendarCellModal({selectedDate, isOpen, onClose, roster
                         staff: existingShift 
                             ? [...existingShift.staff, ...data.selectedStaffs]
                             : data.selectedStaffs,
-                        tag: data.selectedTag
+                        tag: data.selectedTag,
                     }
                 }
             }
@@ -44,29 +43,23 @@ export default function CalendarCellModal({selectedDate, isOpen, onClose, roster
         setRoster(updatedRoster);
     }
 
-    const getRosterEntries = () => {
-        if (!selectedDate) return [];
+    const handleDeleteStaff = (tagLabel: string, staffId: number) => {
+        if (!selectedDate || !staffId || !tagLabel) return;
         
         const monthYearKey = `${selectedDate.getMonth() + 1}-${selectedDate.getFullYear()}`;
         const day = selectedDate.getDate();
+    
+        const updatedRoster = produce(roster, draft => {
+            const shift = draft[monthYearKey]?.[day]?.[tagLabel];
+            if (shift?.staff) {
+                shift.staff = shift.staff.filter(staff => staff.id !== staffId);
+            }
 
-        const dayRoster = roster[monthYearKey]?.[day];
-        if (!dayRoster) return [];
-
-        return Object.entries(dayRoster).map(([tagLabel, shiftAssignment]) => ({
-            tagLabel,
-            ...shiftAssignment
-        }));
-    };
-
-    const handleDelete = (tagLabel: string) => {
-        if (!selectedDate) return;
-        
-        const monthYearKey = `${selectedDate.getMonth() + 1}-${selectedDate.getFullYear()}`;
-        const day = selectedDate.getDate();
-        
-        const updatedRoster = {...roster};
-        delete updatedRoster[monthYearKey][day][tagLabel];
+            if (shift.staff.length === 0) {
+                delete draft[monthYearKey][day][tagLabel];
+            }
+        });
+    
         setRoster(updatedRoster);
     };
 
@@ -75,65 +68,69 @@ export default function CalendarCellModal({selectedDate, isOpen, onClose, roster
     return (
         <>
             <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-                <DialogContent className="flex flex-col w-full w-[700px] sm:max-w-[700px] max-h-[700px] bg-white font-inter">
+                <DialogContent className="flex flex-col w-[800px] sm:max-w-[800px] bg-white font-inter">
                     <div className="flex flex-col">
                         <div className="flex flex-row">
-                            <CalendarCellForm 
-                                selectedDate={selectedDate} 
-                                onSubmit={handleFormSubmit}
-                            ></CalendarCellForm>
+                            <div className="w-1/2">
+                                <CalendarCellForm 
+                                    selectedDate={selectedDate} 
+                                    onSubmit={handleFormSubmit}
+                                    roster={roster}
+                                    setRoster={setRoster}
+                                />
+                            </div>
 
-                            <div className="border-l border-dashed border-gray-400 mx-8 my-2 h-auto" />
+                            <div className="border-l border-dashed border-gray-400 mx-8 h-auto" />
                                                         
                             <div className="flex flex-col w-1/2">
-                                <div className="flex items-center gap-2 my-2">
+                                <div className="flex items-center mb-2">
                                     <DialogTitle>
                                         {selectedDate?.toDateString()}
                                     </DialogTitle>
-                                    <div className="relative group w-fit">
-                                        <BsQuestionCircle className="text-primary text-lg cursor-pointer"/>
-                                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-10">
-                                            <Hover message="List of Assigned Staffs" />
-                                        </div>
-                                    </div>
                                 </div>
 
-                                <div className="overflow-y-auto max-h-[300px] w-full">
+                                <div className="w-full h-full overflow-y-auto">
                                     {rosterEntries.length === 0 
                                     ? (
-                                        <p className="text-primary mt-2 font-semibold">No Roster Created</p>
+                                        <p className="text-primary font-semibold mt-2">No Staff & Tag are selected</p>
                                     ) 
                                     : (
-                                        <ul className="text-md space-y-1">
+                                        <ul className="text-md">
                                             {rosterEntries.map(({tagLabel, tag, staff}) => {
                                                 const tagConfig = formConfig.fields.find(field => field.label === tag.label);
                                                 
                                                 return (
                                                     <li key={tagLabel}>
-                                                        <div className="flex flex-col w-full mt-2 px-3 pb-4 pt-2 border border-gray-200 rounded-sm">
+                                                        <div className="flex flex-col w-full mt-2 p-3 border border-gray-300 rounded-lg">
                                                             <div className="flex justify-between items-center">
-                                                                <p className={`font-semibold text-primary`} style={{ color: tagConfig?.color }}>
+                                                                <p className={`font-bold text-primary`} style={{ color: tagConfig?.color }}>
                                                                     {tag.label}
                                                                     <span className="text-xs font-normal text-gray-500 ml-2">
                                                                         {tag.name}
                                                                     </span>
                                                                 </p>
-                                                                <FiMinusCircle 
-                                                                    className="h-6 w-6 text-red-800 cursor-pointer" 
-                                                                    onClick={() => handleDelete(tagLabel)}
-                                                                />
                                                             </div>
                                                             <div className="mt-2">
-                                                                {staff.map((member) => (
+                                                                {staff.map((s) => (
                                                                     <div 
-                                                                        key={member.id}
+                                                                        key={s.id}
                                                                         className="flex items-center gap-2 mt-1"
                                                                     >
-                                                                        {/* <div 
-                                                                            className="w-3 h-3 rounded-full" 
-                                                                            style={{ backgroundColor: member.color }} 
-                                                                        /> */}
-                                                                        <div className="text-sm font-semibold w-full h-10 p-2 text-white rounded-sm" style={{ backgroundColor: member.color }} >{member.name}</div>
+                                                                        <div 
+                                                                            className="text-sm font-semibold w-full h-10 p-2 text-white rounded-lg flex justify-between print:" 
+                                                                            style={{ backgroundColor: s.color }}
+                                                                        >
+                                                                            <div>
+                                                                                {s.name}
+                                                                                {['OF', 'AL', 'AH', 'UL'].includes(tag.label) && s.note && (
+                                                                                    <span className="ml-2">({s.note})</span>
+                                                                                )}
+                                                                            </div>
+                                                                            <FiMinusCircle 
+                                                                                className="h-6 w-6 text-red-800 cursor-pointer" 
+                                                                                onClick={() => handleDeleteStaff(tagLabel, s.id)}
+                                                                            />
+                                                                        </div>
                                                                     </div>
                                                                 ))}
                                                             </div>
