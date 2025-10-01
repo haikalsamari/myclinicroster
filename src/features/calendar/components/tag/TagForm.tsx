@@ -21,7 +21,7 @@ export default function TagForm({onSubmit}: TagFormProps) {
     const [selectedLabel, setSelectedLabel] = useState<string>("");
 
     const handleSelectedTag = (selectedValue: string) => {
-        const selectedField = formConfig.fields.find(field => field.label === selectedValue);
+        const selectedField = formConfig.fields.find((field:{ name: string; label: string; color: string; }) => field.label === selectedValue);
         if (selectedField) {
             setSelectedLabel(selectedValue);
             setSelectedName(selectedField.name);
@@ -89,7 +89,7 @@ export default function TagForm({onSubmit}: TagFormProps) {
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
-                                        {formConfig.fields.map((field) => (
+                                        {formConfig.fields.map((field:{ name: string; label: string; color: string; }) => (
                                             <SelectItem 
                                                 key={field.name} 
                                                 value={field.label}

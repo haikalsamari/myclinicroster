@@ -97,7 +97,7 @@ export default function CalendarCellModal({selectedDate, isOpen, onClose, roster
                                     : (
                                         <ul className="text-md">
                                             {rosterEntries.map(({tagLabel, tag, staff}) => {
-                                                const tagConfig = formConfig.fields.find(field => field.label === tag.label);
+                                                const tagConfig = formConfig.fields.find((field:{ name: string; label: string; color: string; }) => field.label === tag.label);
                                                 
                                                 return (
                                                     <li key={tagLabel}>
