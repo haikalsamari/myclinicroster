@@ -7,9 +7,9 @@ import { useLocalStorage } from "@/hooks/useLocalStorage"
 import { useState } from "react";
 import { BsQuestionCircle } from "react-icons/bs";
 import type { Roster } from "../../types/roster";
-import { formConfig } from "../../utils/formConfig";
 import { LOCAL_STORAGE_KEYS } from "@/services/rosterService";
 import { getDayMonthYear } from "../../utils/daysMonths";
+import { formConfig } from "../../utils/formConfig";
 
 interface SelectedStaff {
     id: number;
