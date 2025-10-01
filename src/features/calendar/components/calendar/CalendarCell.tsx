@@ -44,7 +44,7 @@ export default function CalendarCell({isToday, date}: CalendarCellProps) {
                     </div>
                     <div className="px-2 font-inter">
                         {getRosterEntries().map(({tag, staff}) => {
-                            const tagConfig = formConfig.fields.find(field => field.label === tag.label);
+                            const tagConfig = formConfig.fields.find((field:{ name: string; label: string; color: string; }) => field.label === tag.label);
                             
                             return (
                                 <div key={tag.label} className="flex flex-row items-center bg-gray-300 print:!bg-gray-300 p-1 rounded-md mb-1">
