@@ -14,7 +14,6 @@ export default function IndexPage() {
                 <Header onPrint={handlePrint}></Header>
                 <div ref={calendarRef} className="w-full print:w-[1400px] mx-auto">
                     <CalendarContainer></CalendarContainer>
-                    {/* <CalendarSideNote></CalendarSideNote> */}
                 </div>
             </div>
         </>
