@@ -8,15 +8,21 @@ import StaffHover from "../../../components/common/Hover";
 
 interface StaffFormProps {
     onSubmit: (staff: Omit<Staff, "id">) => void;
+    countStaffs: number;
 }
 
-export default function StaffForm({onSubmit}: StaffFormProps) {
+export default function StaffForm({onSubmit, countStaffs}: StaffFormProps) {
     const [, setId] = useState<number | 0>(0);
     const [name, setName] = useState<string>("");
     const [color, setColor] = useState<string>("");
 
     const handleSubmit = () => {
         if (!name.trim() || !color) return;
+
+        if (countStaffs >= 4 ) {
+            alert("You have reach maximum number of staffs")
+            return;
+        }
 
         onSubmit({name, color});
         setId(0);
@@ -29,7 +35,7 @@ export default function StaffForm({onSubmit}: StaffFormProps) {
             <div className="flex flex-col justify-between">
                 <div>
                     {formConfig.fields.map((field) => (
-                        <div className="py-2" key={field.name}>
+                        <div key={field.name}>
                             <div className="flex flex-row items-center gap-2">
                                 <DialogTitle className="mb-4">{field.label}</DialogTitle>
                                 <div className="relative group w-fit">
@@ -42,11 +48,12 @@ export default function StaffForm({onSubmit}: StaffFormProps) {
                             <div>
                                 {field.type === "text" ? (
                                         <input
-                                            className="w-full h-10 px-2 mr-4 mb-4 border border-gray-300 rounded-lg placeholder:text-sm"
+                                            className="w-full h-10 px-2 mr-4 mb-4 border border-gray-300 rounded-lg placeholder:text-sm focus:outline-primary"
                                             placeholder={field.placeholder}
                                             value={name} 
                                             onChange={(e) => setName(e.target.value)}
                                             required={field.required}
+                                            disabled={countStaffs >= 4}
                                         />
                                     ) : field.type === "radio" ? (
                                         <div className="grid grid-cols-5 gap-4 mt-2 place-items-center">
@@ -60,6 +67,7 @@ export default function StaffForm({onSubmit}: StaffFormProps) {
                                                         onChange={() => {setColor(option.value)
                                                             console.log(option.value)}
                                                         }
+                                                        disabled={countStaffs >= 4}
                                                         className="hidden"
                                                     />
                                                     <span
@@ -74,7 +82,7 @@ export default function StaffForm({onSubmit}: StaffFormProps) {
                             </div>
                         </div>
                     ))}
-                    <div className="flex flex-row mt-2 p-2 rounded-lg bg-gray-100 gap-2 items-center">
+                    <div className="flex flex-row mt-6 p-2 rounded-lg bg-gray-100 gap-2 items-center">
                         <span
                             className="w-7 h-7 rounded-full border border-gray hover:border-primary"
                             style={{ backgroundColor: color }}
@@ -82,7 +90,14 @@ export default function StaffForm({onSubmit}: StaffFormProps) {
                         <p className="font-semibold text-sm">selected</p>
                     </div>
                 </div>
-                <Button className="w-full h-10 mt-4 rounded-lg text-white" variant="default" onClick={handleSubmit}>Add Staff</Button>
+                <Button 
+                    className="w-full h-10 mt-4 rounded-lg text-white" 
+                    variant="default" 
+                    onClick={handleSubmit} 
+                    disabled={countStaffs >= 4}
+                    >
+                        Add Staff
+                </Button>
             </div>
         </>
     )

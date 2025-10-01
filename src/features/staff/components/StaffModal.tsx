@@ -47,7 +47,7 @@ export default function StaffModal({isOpen, onClose}: StaffModalProps) {
     const renderStaffList = staffList.map((staff) => (
         <li key={staff.id}>
             <div 
-                className={`flex items-center h-10 w-full mt-2 pl-4 pr-2 border border-gray-100 rounded-sm justify-between`}
+                className={`flex items-center h-10 w-full mt-2 pl-4 pr-2 border border-gray-100 rounded-lg justify-between`}
                 style={{backgroundColor: staff.color}}>
                 <p className="font-semibold text-sm text-white">{staff.name}</p>
                 <div className="flex flex-row items-center gap-2">
@@ -63,15 +63,17 @@ export default function StaffModal({isOpen, onClose}: StaffModalProps) {
     return (
         <>
             <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-                <DialogContent className="flex flex-col w-full w-[700px] sm:max-w-[700px] max-h-[400px] bg-white font-inter">
+                <DialogContent className="flex flex-col w-full w-[800px] sm:max-w-[800px] bg-white font-inter">
                     <div className="flex flex-col">
                         <div className="flex flex-row">
-                            <StaffForm onSubmit={handleAdd}></StaffForm>
+                            <div className="w-1/2">
+                                <StaffForm onSubmit={handleAdd} countStaffs={totalStaffs}/>
+                            </div>
                             
-                            <div className="border-l border-dashed border-gray-400 mx-8 my-2 h-auto" />
+                            <div className="border-l border-dashed border-gray-400 mx-8 h-auto" />
                             
-                            <div className="flex flex-col w-1/2 max-h-[400px]">
-                                <div className="flex items-center gap-2 my-2">
+                            <div className="flex flex-col w-1/2">
+                                <div className="flex items-center gap-2">
                                     <DialogTitle className="">
                                     {totalStaffs < 2 
                                         ? "All Available Staff "

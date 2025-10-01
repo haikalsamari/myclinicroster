@@ -12,3 +12,10 @@ export const getDaysInMonth = (year: number, month: number): Date[] => {
     }
     return days;
 }
+
+export const getDayMonthYear = (date: Date) => {
+    const monthYearKey = `${date.getMonth() + 1}-${date.getFullYear()}`;
+    const dayKey = date.getDate();
+
+    return {monthYearKey, dayKey} as const;
+}

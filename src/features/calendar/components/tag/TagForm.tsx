@@ -3,11 +3,11 @@ import { DialogTitle } from "@/components/ui/dialog";
 import { BsQuestionCircle } from "react-icons/bs";
 import { useState } from "react";
 import type { Tag } from "@/features/calendar/types/tag";
-import { formConfig } from "../../utils/FormConfig";
+import { formConfig } from "../../utils/formConfig";
 import Hover from "@/components/common/Hover";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { capitalizeFirstAlphabet } from "../../utils/CapitalizeFirstAlphabet";
+import normalizeCharacters from "../../utils/normalizeCharacters";
 
 interface TagFormProps {
     onSubmit: (tags: Tag) => void;
@@ -34,7 +34,7 @@ export default function TagForm({onSubmit}: TagFormProps) {
             setSelectedName("");
 
             const tag: Tag = {
-                name: capitalizeFirstAlphabet(name.trim()), 
+                name: normalizeCharacters(name.trim()), 
                 label: label.trim()
             } 
 
