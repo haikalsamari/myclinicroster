@@ -4,7 +4,7 @@ import type { Staff } from "@/features/staff/types/staff";
 import { BsQuestionCircle } from "react-icons/bs";
 import { useState } from "react";
 import StaffHover from "../../../components/common/Hover";
-import { formConfig } from "../utils/testconfig";
+import { formConfig } from "../utils/formConfig";
 
 interface StaffFormProps {
     onSubmit: (staff: Omit<Staff, "id">) => void;

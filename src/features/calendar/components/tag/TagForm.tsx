@@ -3,7 +3,7 @@ import { DialogTitle } from "@/components/ui/dialog";
 import { BsQuestionCircle } from "react-icons/bs";
 import { useState } from "react";
 import type { Tag } from "@/features/calendar/types/tag";
-import { formConfig } from "../../utils/tagConfig";
+import { tagConfig } from "../../utils/tagConfig";
 import Hover from "@/components/common/Hover";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
@@ -21,7 +21,7 @@ export default function TagForm({onSubmit}: TagFormProps) {
     const [selectedLabel, setSelectedLabel] = useState<string>("");
 
     const handleSelectedTag = (selectedValue: string) => {
-        const selectedField = formConfig.fields.find((field:{ name: string; label: string; color: string; }) => field.label === selectedValue);
+        const selectedField = tagConfig.fields.find((field:{ name: string; label: string; color: string; }) => field.label === selectedValue);
         if (selectedField) {
             setSelectedLabel(selectedValue);
             setSelectedName(selectedField.name);
@@ -89,7 +89,7 @@ export default function TagForm({onSubmit}: TagFormProps) {
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
-                                        {formConfig.fields.map((field:{ name: string; label: string; color: string; }) => (
+                                        {tagConfig.fields.map((field:{ name: string; label: string; color: string; }) => (
                                             <SelectItem 
                                                 key={field.name} 
                                                 value={field.label}
