@@ -7,9 +7,9 @@ import { useLocalStorage } from "@/hooks/useLocalStorage"
 import { useState } from "react";
 import { BsQuestionCircle } from "react-icons/bs";
 import type { Roster } from "../../types/roster";
-import { formConfig } from "../../utils/formConfig";
 import { LOCAL_STORAGE_KEYS } from "@/services/rosterService";
 import { getDayMonthYear } from "../../utils/daysMonths";
+import { formConfig } from "../../utils/formConfig";
 
 interface SelectedStaff {
     id: number;
@@ -77,7 +77,7 @@ export default function CalendarCellForm({selectedDate, onSubmit, roster}: Calen
     }
 
     const handleSelectedTag = (value: string) => {
-        const selectedField = formConfig.fields.find(field => field.label === value);
+        const selectedField = formConfig.fields.find((field:{ name: string; label: string; color: string; }) => field.label === value);
         if (selectedField) {
             setSelectedTag({
                 name: selectedField.name,
@@ -181,7 +181,7 @@ export default function CalendarCellForm({selectedDate, onSubmit, roster}: Calen
                         </SelectTrigger>
                         <SelectContent className="bg-white">
                             <SelectGroup>
-                                {formConfig.fields.map((field) => (
+                                {formConfig.fields.map((field:{ name: string; label: string; color: string; }) => (
                                     <SelectItem 
                                         key={field.name} 
                                         value={field.label}
