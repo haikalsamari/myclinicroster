@@ -9,6 +9,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "strict": false,
+    "noImplicitAny": false,
     "forceConsistentCasingInFileNames": false
   }
 }
