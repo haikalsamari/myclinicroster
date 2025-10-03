@@ -1,4 +1,4 @@
-import { colorOptions } from "./colorOptions";
+import { colorOptions } from "./ColorOptions";
 
 export const formConfig = {
     fields: [
