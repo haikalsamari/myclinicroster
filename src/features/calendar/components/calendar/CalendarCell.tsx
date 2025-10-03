@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import CalendarCellModal from "./CalendarCellModal";
 import type { Roster } from "../../types/roster";
-import { formConfig } from "../../utils/formConfig";
+import { tagConfig } from "../../utils/tagConfig";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useRoster } from "../../hooks/useRoster";
 import { LOCAL_STORAGE_KEYS } from "@/services/rosterService";
@@ -44,15 +44,15 @@ export default function CalendarCell({isToday, date}: CalendarCellProps) {
                     </div>
                     <div className="px-2 font-inter">
                         {getRosterEntries().map(({tag, staff}) => {
-                            const tagConfig = formConfig.fields.find((field:{ name: string; label: string; color: string; }) => field.label === tag.label);
+                            const tagConf = tagConfig.fields.find((field:{ name: string; label: string; color: string; }) => field.label === tag.label);
                             
                             return (
                                 <div key={tag.label} className="flex flex-row items-center bg-gray-300 print:!bg-gray-300 p-1 rounded-md mb-1">
                                     <p 
                                         className={`font-inter font-bold text-sm mr-2 w-[30px] border-r-2 border-gray-200 print:border-black`}
                                         style={{ 
-                                            color: tagConfig?.color,
-                                            borderRightColor: tagConfig?.color 
+                                            color: tagConf?.color,
+                                            borderRightColor: tagConf?.color 
                                         }}
                                     >
                                         {tag.label}

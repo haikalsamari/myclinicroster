@@ -3,7 +3,7 @@ import { DialogTitle } from "@/components/ui/dialog";
 import { BsQuestionCircle } from "react-icons/bs";
 import { useState } from "react";
 import type { Tag } from "@/features/calendar/types/tag";
-import { formConfig } from "../../utils/formConfig";
+import { formConfig } from "../../utils/tagConfig";
 import Hover from "@/components/common/Hover";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useLocalStorage } from "@/hooks/useLocalStorage";

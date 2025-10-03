@@ -3,7 +3,7 @@ import { FiMinusCircle } from "react-icons/fi";
 import CalendarCellForm from "./CalendarCellForm";
 import { produce } from 'immer'; 
 import type { Roster, SelectedStaff, SelectedTag } from "../../types/roster";
-import { formConfig } from "../../utils/formConfig";
+import { tagConfig } from "../../utils/tagConfig";
 // import { getDayMonthYear } from "../../utils/daysMonths";
 import { useRoster } from "../../hooks/useRoster";
 
@@ -97,13 +97,13 @@ export default function CalendarCellModal({selectedDate, isOpen, onClose, roster
                                     : (
                                         <ul className="text-md">
                                             {rosterEntries.map(({tagLabel, tag, staff}) => {
-                                                const tagConfig = formConfig.fields.find((field:{ name: string; label: string; color: string; }) => field.label === tag.label);
+                                                const tagConf = tagConfig.fields.find((field:{ name: string; label: string; color: string; }) => field.label === tag.label);
                                                 
                                                 return (
                                                     <li key={tagLabel}>
                                                         <div className="flex flex-col w-full mt-2 p-3 border border-gray-300 rounded-lg">
                                                             <div className="flex justify-between items-center">
-                                                                <p className={`font-bold text-primary`} style={{ color: tagConfig?.color }}>
+                                                                <p className={`font-bold text-primary`} style={{ color: tagConf?.color }}>
                                                                     {tag.label}
                                                                     <span className="text-xs font-normal text-gray-500 ml-2">
                                                                         {tag.name}

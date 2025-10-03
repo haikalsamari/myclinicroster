@@ -1,4 +1,4 @@
-export const formConfig = {
+export const tagConfig = {
     fields: [
         {
             name: "Full Shift",
