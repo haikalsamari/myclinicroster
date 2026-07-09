@@ -1,7 +1,8 @@
 export const LOCAL_STORAGE_KEYS = {
     ROSTER: 'rosters',
     STAFF: 'staffs',
-    TAGS: 'tags'
+    TAGS: 'tags',
+    SELECTED_STATE: 'selectedState'
 }
 
 export type StorageKey = typeof LOCAL_STORAGE_KEYS[keyof typeof LOCAL_STORAGE_KEYS];

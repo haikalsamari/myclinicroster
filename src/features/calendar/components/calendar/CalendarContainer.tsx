@@ -3,7 +3,11 @@ import { useCalendarNavigation } from "../../hooks/useCalendarNavigation";
 import { calculateEmptyCells } from "../../utils/calculateEmptyCells";
 import { CalendarHeader } from "./CalendarHeader";
 
-export default function CalendarContainer() {
+interface CalendarContainerProps {
+    selectedState: string,
+}
+
+export default function CalendarContainer({selectedState}: CalendarContainerProps) {
     const today = new Date();
     const {currentMonth, currentYear, nextMonth, previousMonth} = useCalendarNavigation(today.getMonth(), today.getFullYear());
     const {calendarCells} = calculateEmptyCells(currentYear, currentMonth);
@@ -26,11 +30,12 @@ export default function CalendarContainer() {
                         date?.getFullYear() === today.getFullYear();
 
         return (
-            <CalendarCell 
-                key={index} 
-                isToday={isToday} 
-                date={date} 
-            />    
+            <CalendarCell
+                key={index}
+                isToday={isToday}
+                date={date}
+                selectedState={selectedState}
+            />
         )
     })
 
