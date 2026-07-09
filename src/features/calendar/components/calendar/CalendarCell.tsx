@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import CalendarCellModal from "./CalendarCellModal";
 import type { Roster } from "../../types/roster";
@@ -18,6 +18,14 @@ export default function CalendarCell({isToday, date, selectedState}: CalendarCel
     // const [roster, setRoster] = useLocalStorage<Roster>("rosters", {});
     const [roster, setRoster] = useLocalStorage<Roster>(LOCAL_STORAGE_KEYS.ROSTER, {});
     const [openCellModal, setOpenCellModal] = useState(false);
+    const [showEditPrank, setShowEditPrank] = useState(false);
+    const prankTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+    const triggerEditPrank = () => {
+        setShowEditPrank(true);
+        clearTimeout(prankTimeoutRef.current);
+        prankTimeoutRef.current = setTimeout(() => setShowEditPrank(false), 1500);
+    }
     const {getRosterEntries} = useRoster(date, roster);
     const publicHolidays = getPublicHolidays(date, selectedState);
     const rosterEntries = getRosterEntries();
@@ -43,10 +51,18 @@ export default function CalendarCell({isToday, date, selectedState}: CalendarCel
                         <span className="text-md mt-1">{date?.getDate() ?? ''}</span>
                         {date && (
                             isHolidayLocked ? (
-                                <FiEdit
-                                    className="mt-1 text-gray-400 cursor-not-allowed no-print"
-                                    title="Clinic closed for public holiday"
-                                />
+                                <div className="relative">
+                                    <FiEdit
+                                        className="mt-1 text-gray-400 cursor-not-allowed no-print"
+                                        title="Clinic closed for public holiday"
+                                        onClick={triggerEditPrank}
+                                    />
+                                    {showEditPrank && (
+                                        <span className="absolute top-full right-0 whitespace-nowrap text-sm font-semibold bg-black text-white px-2 py-1 rounded no-print z-10">
+                                            Click apa tuu?
+                                        </span>
+                                    )}
+                                </div>
                             ) : (
                                 <FiEdit
                                     className="mt-1 cursor-pointer hover:text-primary no-print"

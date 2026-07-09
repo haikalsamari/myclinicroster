@@ -9,7 +9,7 @@ interface CalendarContainerProps {
 
 export default function CalendarContainer({selectedState}: CalendarContainerProps) {
     const today = new Date();
-    const {currentMonth, currentYear, nextMonth, previousMonth} = useCalendarNavigation(today.getMonth(), today.getFullYear());
+    const {currentMonth, currentYear, nextMonth, previousMonth, canGoPrevious, canGoNext} = useCalendarNavigation(today.getMonth(), today.getFullYear());
     const {calendarCells} = calculateEmptyCells(currentYear, currentMonth);
     
     const dayList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -44,8 +44,10 @@ export default function CalendarContainer({selectedState}: CalendarContainerProp
             <CalendarHeader 
                 currentMonth={currentMonth} 
                 currentYear={currentYear} 
-                onNextMonth={nextMonth} 
+                onNextMonth={nextMonth}
                 onPreviousMonth={previousMonth}
+                canGoPrevious={canGoPrevious}
+                canGoNext={canGoNext}
             />
             <div className="border border-1 rounded-lg">
                 <div className="grid grid-cols-7 text-center font-semibold text-sm">
