@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import CalendarCellModal from "./CalendarCellModal";
 import type { Roster } from "../../types/roster";
