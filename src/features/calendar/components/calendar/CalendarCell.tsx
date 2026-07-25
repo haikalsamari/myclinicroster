@@ -29,8 +29,8 @@ export default function CalendarCell({isToday, date, selectedState}: CalendarCel
     const {getRosterEntries} = useRoster(date, roster);
     const publicHolidays = getPublicHolidays(date, selectedState);
     const rosterEntries = getRosterEntries();
-    const isHolidayLocked = isPublicHolidayLocked(date, selectedState);
-    const showHolidayBanner = publicHolidays.length > 0 && (isHolidayLocked || rosterEntries.length === 0);
+    // const isHolidayLocked = isPublicHolidayLocked(date, selectedState);
+    const showHolidayBanner = publicHolidays.length > 0 && rosterEntries.length === 0;
 
     return (
         <>
@@ -49,27 +49,10 @@ export default function CalendarCell({isToday, date, selectedState}: CalendarCel
                     >
                     <div className="flex items-start justify-between px-2 text-sm font-bold">
                         <span className="text-md mt-1">{date?.getDate() ?? ''}</span>
-                        {date && (
-                            isHolidayLocked ? (
-                                <div className="relative">
-                                    <FiEdit
-                                        className="mt-1 text-gray-400 cursor-not-allowed no-print"
-                                        title="Clinic closed for public holiday"
-                                        onClick={triggerEditPrank}
-                                    />
-                                    {showEditPrank && (
-                                        <span className="absolute top-full right-0 whitespace-nowrap text-sm font-semibold bg-black text-white px-2 py-1 rounded no-print z-10">
-                                            Click apa tuu?
-                                        </span>
-                                    )}
-                                </div>
-                            ) : (
-                                <FiEdit
-                                    className="mt-1 cursor-pointer hover:text-primary no-print"
-                                    onClick={() => setOpenCellModal(true)}
-                                />
-                            )
-                        )}
+                        <FiEdit
+                            className="mt-1 cursor-pointer hover:text-primary no-print"
+                            onClick={() => setOpenCellModal(true)}
+                        />
                         <CalendarCellModal
                             selectedDate={date}
                             isOpen={openCellModal}
