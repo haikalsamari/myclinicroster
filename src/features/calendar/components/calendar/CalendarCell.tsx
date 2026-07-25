@@ -6,7 +6,7 @@ import { tagConfig } from "../../utils/tagConfig";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useRoster } from "../../hooks/useRoster";
 import { LOCAL_STORAGE_KEYS } from "@/services/rosterService";
-import { getPublicHolidays, isPublicHolidayLocked } from "../../utils/publicHoliday";
+import { getPublicHolidays } from "../../utils/publicHoliday";
 
 interface CalendarCellProps {
     isToday: boolean,
@@ -18,14 +18,14 @@ export default function CalendarCell({isToday, date, selectedState}: CalendarCel
     // const [roster, setRoster] = useLocalStorage<Roster>("rosters", {});
     const [roster, setRoster] = useLocalStorage<Roster>(LOCAL_STORAGE_KEYS.ROSTER, {});
     const [openCellModal, setOpenCellModal] = useState(false);
-    const [showEditPrank, setShowEditPrank] = useState(false);
-    const prankTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+    // const [, setShowEditPrank] = useState(false);
+    // const prankTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-    const triggerEditPrank = () => {
-        setShowEditPrank(true);
-        clearTimeout(prankTimeoutRef.current);
-        prankTimeoutRef.current = setTimeout(() => setShowEditPrank(false), 1500);
-    }
+    // const triggerEditPrank = () => {
+    //     setShowEditPrank(true);
+    //     clearTimeout(prankTimeoutRef.current);
+    //     prankTimeoutRef.current = setTimeout(() => setShowEditPrank(false), 1500);
+    // }
     const {getRosterEntries} = useRoster(date, roster);
     const publicHolidays = getPublicHolidays(date, selectedState);
     const rosterEntries = getRosterEntries();
